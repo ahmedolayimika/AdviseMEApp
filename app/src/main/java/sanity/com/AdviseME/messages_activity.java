@@ -30,7 +30,7 @@ public class messages_activity extends AppCompatActivity {
     RecyclerView chatListRecycler;
     FirebaseAuth firebaseAuth;
     List<ModelChatList> chatListList;
-    List<users> usersList;
+    List<User_details> usersList;
     DatabaseReference ChatListRef, UsersRef;
     Query myquery;
     FirebaseUser currentuser;
@@ -80,7 +80,7 @@ public class messages_activity extends AppCompatActivity {
 
     }
 
-    private void LoadChats() {
+    /*private void LoadChats() {
         usersList = new ArrayList<>();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         UsersRef.keepSynced(true);
@@ -88,7 +88,7 @@ public class messages_activity extends AppCompatActivity {
         myquery = UsersRef.orderByChild("level").equalTo(myLevel);
         myquery.keepSynced(true);
 
-        myquery.addValueEventListener(new ValueEventListener() {
+        UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 usersList.clear();
@@ -112,6 +112,46 @@ public class messages_activity extends AppCompatActivity {
 
                     for (int i = 0; i < usersList.size(); i++) {
                         lastMessage(usersList.get(i).getUID());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }*/
+
+    private void LoadChats() {
+        usersList = new ArrayList<>();
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        UsersRef.keepSynced(true);
+
+        UsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                usersList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    User_details users = dataSnapshot.getValue(User_details.class);
+                    for (ModelChatList chatList : chatListList) {
+                        if (users.getuID() != null && users.getuID().equals(chatList.getId())) {
+                            usersList.add(users);
+                            break;
+                        }
+                    }
+
+                    adapterChatList = new AdapterChatList(messages_activity.this, usersList);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(messages_activity.this);
+                    layoutManager.setStackFromEnd(true);
+                    layoutManager.setReverseLayout(true);
+                    chatListRecycler.setLayoutManager(layoutManager);
+                    // chatListRecycler.setHasFixedSize(true);
+                    chatListRecycler.setAdapter(adapterChatList);
+
+
+                    for (int i = 0; i < usersList.size(); i++) {
+                        lastMessage(usersList.get(i).getuID());
                     }
                 }
             }

@@ -24,10 +24,10 @@ import AdviseME.R;
 public class AdapterChatList extends RecyclerView.Adapter<AdapterChatList.myViewHolder> {
 
     private Context context;
-   private List<users> usersList;
+   private List<User_details> usersList;
     private HashMap<String, String> lastMessageMap;
 
-    public AdapterChatList(Context context, List<users> usersList) {
+    public AdapterChatList(Context context, List<User_details> usersList) {
         this.context = context;
         this.usersList = usersList;
         lastMessageMap = new HashMap<>();
@@ -45,7 +45,7 @@ public class AdapterChatList extends RecyclerView.Adapter<AdapterChatList.myView
 
         //get data
         final String userName = usersList.get(position).getFirst_name() + " " + usersList.get(position).getLast_name();
-        String userUID = usersList.get(position).getUID();
+        String userUID = usersList.get(position).getuID();
         final String UserImage = usersList.get(position).getProfile_Image();
         String onlineStatus = usersList.get(position).getOnlineStatus();
         String LastMessage = lastMessageMap.get(userUID);
@@ -92,7 +92,7 @@ public class AdapterChatList extends RecyclerView.Adapter<AdapterChatList.myView
                 Bundle chatBundle = new Bundle();
                 chatBundle.putString("personName", userName);
                 chatBundle.putString("personImage", UserImage);
-                chatBundle.putString("UID", usersList.get(position).getUID());
+                chatBundle.putString("UID", usersList.get(position).getuID());
                 chatIntent.putExtras(chatBundle);
                 context.startActivity(chatIntent);
             }
