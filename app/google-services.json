@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "639524705529",
+    "project_id": "adviseme-8597c",
+    "storage_bucket": "adviseme-8597c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639524705529:android:abecc220b5ebe29d297e28",
+        "android_client_info": {
+          "package_name": "sanity.com.AdviseME"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639524705529-etph616h3s26gfjrc08rkhg35b9sj21a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdBH_8KF2QcE1TvRxktzx8cC2GZzRrga8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639524705529-etph616h3s26gfjrc08rkhg35b9sj21a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

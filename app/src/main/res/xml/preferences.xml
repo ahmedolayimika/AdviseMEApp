@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <!--  <PreferenceCategory
+        app:title="NOTIFICATIONS">
+
+        <SwitchPreferenceCompat
+            app:key="notify"
+            app:summaryOff="Disabled"
+            app:summaryOn="Enabled"
+            app:title="System notifications"
+            android:icon="@drawable/notifications_icon"
+            />
+
+        <SwitchPreferenceCompat
+            app:dependency="notify"
+            app:key="sound"
+            app:summaryOff="Sounds disabled"
+            app:summaryOn="Sounds enabled"
+            app:title="Sounds"
+            android:icon="@drawable/sound_icon"/>
+
+
+        <SwitchPreferenceCompat
+            app:dependency="notify"
+            app:key="vibration"
+            app:summaryOff="Vibration disabled"
+            app:summaryOn="Vibration enabled"
+            app:title="Vibration"
+            android:icon="@drawable/vibration_icon"/>
+
+
+
+    </PreferenceCategory>-->
+
+    <PreferenceCategory
+        app:title="ACCOUNT SETTINGS">
+
+            <Preference
+                app:title="Change Password"
+                app:key="changePassword"
+                android:summary="Change your account password"
+                android:icon="@drawable/key_icon"/>
+
+            <Preference
+                app:title="Switch account"
+                app:key="switchAccount"
+                app:summary="Sign out and sign in to another account"
+                android:icon="@drawable/arrows_icon"/>
+
+        </PreferenceCategory>
+
+</PreferenceScreen>

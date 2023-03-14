@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context=".single_post_activity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/single_nested"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/single_img"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="4dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/single_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:padding="10dp"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/single_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/input_outline2"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/single_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:padding="3dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/single_recipients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:padding="3dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:text="Date and time: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/single_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/edited_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:padding="3dp"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/back_drop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/overlay_dark"
+        android:fitsSystemWindows="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/edit_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Edit Post"
+                android:textColor="@color/black" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/edit_post_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                app:fabSize="mini"
+                app:rippleColor="@android:color/black"
+                app:srcCompat="@drawable/pen"
+                app:tint="@color/white" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/delete_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:visibility="gone">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Delete Post"
+                android:textColor="@color/black"
+                app:rippleColor="@android:color/black" />
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/delete_post_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                app:fabSize="mini"
+                app:rippleColor="@android:color/black"
+                app:srcCompat="@drawable/delete_icon"
+                app:tint="@color/white" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/show_comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="View comments"
+                android:textColor="@color/black"
+                app:rippleColor="@android:color/black" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/show_comments_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/comment_icon"
+                app:backgroundTint="@color/colorPrimary"
+                app:fabSize="mini"
+                app:rippleColor="@android:color/black"
+                app:tint="@color/white" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_author_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="View Author's profile"
+                android:textColor="@color/black"
+                app:rippleColor="@android:color/black" />
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/view_author_profile_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                app:fabSize="mini"
+                app:rippleColor="@android:color/black"
+                app:srcCompat="@drawable/person"
+                app:tint="@color/white" />
+
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/myfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:src="@drawable/add_new"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+
+</RelativeLayout>

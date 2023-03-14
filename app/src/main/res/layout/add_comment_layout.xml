@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_margin="5dp"
+    android:background="@color/colorPrimaryDark">
+
+    <ImageButton
+        android:id="@+id/close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="top|end"
+        android:src="@drawable/close_icon"
+        android:background="@color/colorPrimaryDark"
+        android:tint="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/commentator_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="3dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/commentator_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="My full name here"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/send_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/input_outline"
+                android:backgroundTint="@color/white"
+                android:enabled="false"
+                android:padding="10dp"
+                android:text="Add comment"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/my_comment"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/input_outline"
+        android:backgroundTint="@color/white"
+        android:hint="Write your comment ..."
+        android:padding="10dp"
+        android:textSize="15sp"
+        android:layout_margin="5dp"
+        android:gravity="top"/>
+
+    </LinearLayout>

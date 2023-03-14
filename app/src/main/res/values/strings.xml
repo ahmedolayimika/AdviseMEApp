@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">AdviseME</string>
+    <string name="slogan"> Adviser-Student platform </string>
+    <string name="motto">Information at your fingertips</string>
+    <string name="prompt_email">Email</string>
+    <string name="enter_email"> Input your Email</string>
+    <string name="choose_username"> Choose a username</string>
+    <string name="prompt_password">Password</string>
+    <string name="confirm_password">Confirm your Password</string>
+    <string name="reg_password">Password (more than 5 characters)</string>
+    <string name="new_user">"New User? Register now"</string>
+    <string name="already_registered">"Already registered? Login now!"</string>
+    <string name="forgot_password"> Forgot Password?</string>
+    <string name="login"> Login</string>
+    <string name="members_login">Members Login</string>
+    <string name="reset"> Reset password </string>
+    <string name="register"> Register</string>
+    <string name="remember"> Remember your password now? \n Log in</string>
+    <string name="about_app_header"> About this application</string>
+    <string name="about_dev_header"> About the developer </string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_settings_fragment">Settings</string>
+
+    <string-array name="Level">
+        <item> ND1 Full time</item>
+        <item> ND1 Daily part time (DPT)</item>
+        <item> ND PT Year 1</item>
+        <item> ND2 Full time</item>
+        <item> ND2 Daily part time (DPT)</item>
+        <item> ND PT Year 2</item>
+        <item> ND PT Year 3</item>
+        <item> HND1 Full time</item>
+        <item> HND1 Daily part time</item>
+        <item> HND2 Full time</item>
+        <item> HND2 Daily part time</item>
+    </string-array>
+
+    <string name="project_title"><b>PROJECT TITLE HERE</b>\n\n
+    (A CASE STUDY OF COMPUTER SCIENCE DEPARTMENT, FEDERAL POLYTECHNIC EDE).\n\n
+    DEVELOPED BY: \n</string>
+    <string name="name_and_matric"> FULL NAME \n MATRIC NUMBER</string>
+    <string name="supervisor"> \nSupervised by: \n SUPERVISOR NAME </string>
+    <string name="dept"> DEPARTMENT OF COMPUTER SCIENCE, \n SCHOOL OF APPLIED SCIENCES, \n
+    THE FEDRAL POLYTECHNIC, EDE \n OSUN STATE </string>
+    <string name="month">MONTH, YEAR</string>
+    <!--
+        <string name="first_paragraph"><b>ADEBAYO MUHIDEEN ADESOJI</b>
+            \nHC20190103686
+            \n08140302101
+            \nadebayomuhideen5@gmail.com
+            \nGrew up in Osun state Nigeria
+        </string>
+
+        <string name="second_paragraph">
+
+            \n\n Hobbies include: \n
+            - Football\n
+            - Graphics design and editing\n
+            - Seeing documentaries, and educative contents
+
+            \n\n Special Skills: \n
+            - Content creation\n
+            - Image and video editing
+        </string>-->
+
+
+</resources>

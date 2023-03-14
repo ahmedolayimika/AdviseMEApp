@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="AdviseME">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name="sanity.com.AdviseME.AdviseME"
+        android:allowBackup="true"
+        android:icon="@drawable/logo1"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo1"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+
+        <service
+            android:name="sanity.com.AdviseME.MyService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name="sanity.com.AdviseME.chat_activity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name="sanity.com.AdviseME.all_users_activity" />
+
+        <activity android:name="sanity.com.AdviseME.edit_post_activity" />
+        <activity android:name="sanity.com.AdviseME.comments_activity" />
+        <activity android:name="sanity.com.AdviseME.author_profile_activity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sanity.com.AdviseME.author_profile_activity" />
+        </activity>
+        <activity android:name="sanity.com.AdviseME.single_post_activity" />
+        <activity
+            android:name="sanity.com.AdviseME.new_post_activity"
+            android:label="New Post" />
+        <activity android:name="sanity.com.AdviseME.image_display_activity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sanity.com.AdviseME.image_display_activity" />
+        </activity>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity
+            android:name="sanity.com.AdviseME.edit_profile_activity"
+            android:label="Profile Update" />
+        <activity
+            android:name="sanity.com.AdviseME.messages_activity"
+            android:label="Messages" />
+        <activity
+            android:name="sanity.com.AdviseME.my_posts_activity"
+            android:label="My Posts" />
+        <activity
+            android:name="sanity.com.AdviseME.settings_activity"
+            android:label="Settings" />
+        <activity
+            android:name="sanity.com.AdviseME.profile_activity"
+            android:label="Profile" />
+        <activity
+            android:name="sanity.com.AdviseME.main_activity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="sanity.com.AdviseME.register_activity"
+            android:label="Registration" />
+        <activity android:name="sanity.com.AdviseME.login_activity" />
+
+        <activity
+            android:name="sanity.com.AdviseME.Update_Profile_Activity"
+            android:exported="false"
+
+            />
+
+        <activity
+            android:name="sanity.com.AdviseME.splash_screen_activity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/message_layout"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="start">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/receiver_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/developer_icon" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@drawable/input_outline"
+            android:backgroundTint="@color/grey_90"
+            android:padding="12dp"
+            android:text="His message"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/messageTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_gravity="bottom"
+            android:text="dd/mm/yyyy hh:mm"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/isSeen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="Delivered"
+        android:visibility="gone"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorPrimaryDark" />
+
+
+</LinearLayout>
