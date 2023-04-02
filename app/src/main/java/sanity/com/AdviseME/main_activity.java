@@ -390,6 +390,12 @@ public class main_activity extends AppCompatActivity {
 
                         break;
 
+                    case R.id.nav_my_class:
+                        startActivity(new Intent(main_activity.this, all_users_activity.class));
+                        finish();
+
+                        break;
+
 
                     case R.id.nav_messages:
                         startActivity(new Intent(main_activity.this, messages_activity.class));

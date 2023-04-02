@@ -51,6 +51,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -61,13 +64,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
 import AdviseME.R;
 
 public class new_post_activity extends AppCompatActivity {
     private ImageView new_post_image;
     private EditText new_post_title, new_post_desc;
     private Button share_post;
-    private TextView camera, gallery;
+    private TextView camera, gallery, recipients_textView;
     private View upload_image;
     private Uri selected_img = null;
     private static final int GALLERY_REQUEST = 1;
@@ -77,11 +81,10 @@ public class new_post_activity extends AppCompatActivity {
     Vibrator vib;
     private String post_title, post_desc, currentDate, currentTime, timeStamp, author, author_Email, recipients;
     private ProgressDialog updateProgressDialog;
-    private String img_upload_url, first_name, last_name, userID;
+    private String img_upload_url, first_name, last_name, userID, image;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference, user_db;
-    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,26 +103,7 @@ public class new_post_activity extends AppCompatActivity {
         share_post = findViewById(R.id.share_post_btn);
         new_post_title = findViewById(R.id.post_title);
         new_post_desc = findViewById(R.id.post_description);
-
-        spinner = findViewById(R.id.recipients_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.Level, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                recipients = adapterView.getItemAtPosition(i).toString();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
+        recipients_textView = findViewById(R.id.recipients_textView);
 
         updateProgressDialog = new ProgressDialog(this);
 
@@ -141,6 +125,24 @@ public class new_post_activity extends AppCompatActivity {
                 } else {
                     first_name = dataSnapshot.child("first_name").getValue().toString();
                     last_name = dataSnapshot.child("last_name").getValue().toString();
+                    image = dataSnapshot.child("profile_Image").getValue().toString();
+                    recipients = dataSnapshot.child("level").getValue().toString();
+
+                    recipients_textView.setText(recipients);
+
+
+                    Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).into(new_post_image, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Picasso.get().load(image).into(new_post_image);
+
+                        }
+                    });
                 }
             }
 
@@ -150,7 +152,7 @@ public class new_post_activity extends AppCompatActivity {
         });
 
 
-        new_post_image.setOnClickListener(new View.OnClickListener() {
+        /*new_post_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -195,7 +197,7 @@ public class new_post_activity extends AppCompatActivity {
                 });
 
             }
-        });
+        });*/
 
         share_post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,7 +205,7 @@ public class new_post_activity extends AppCompatActivity {
                 post_title = new_post_title.getText().toString().trim();
                 post_desc = new_post_desc.getText().toString().trim();
 
-                if (selected_img == null) {
+                /*if (selected_img == null) {
 
                     vib.vibrate(new long[]{10, 200, 100, 200}, -1);
 
@@ -214,44 +216,44 @@ public class new_post_activity extends AppCompatActivity {
 
                                 }
                             }).show();
+                } else {*/
+
+                if (post_title.isEmpty()) {
+                    Snackbar.make(view, "Your post needs a title", BaseTransientBottomBar.LENGTH_LONG)
+                            .setAction("Okay", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            }).show();
+                } else if (post_desc.isEmpty()) {
+                    Snackbar.make(view, "Your post needs a Description", BaseTransientBottomBar.LENGTH_LONG)
+                            .setAction("Okay", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            }).show();
+                } else if (post_desc.length() < 20) {
+                    Snackbar.make(view, "Your Description is too short!", BaseTransientBottomBar.LENGTH_LONG)
+                            .setAction("Okay", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            }).show();
+                } else if (recipients.equals("")) {
+                    Snackbar.make(view, "Please specify your recipients from the drop down", BaseTransientBottomBar.LENGTH_LONG)
+                            .setAction("Okay", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            }).show();
                 } else {
-
-                    if (post_title.isEmpty()) {
-                        Snackbar.make(view, "Your post needs a title", BaseTransientBottomBar.LENGTH_LONG)
-                                .setAction("Okay", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                    }
-                                }).show();
-                    } else if (post_desc.isEmpty()) {
-                        Snackbar.make(view, "Your post needs a Description", BaseTransientBottomBar.LENGTH_LONG)
-                                .setAction("Okay", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                    }
-                                }).show();
-                    } else if (post_desc.length() < 20) {
-                        Snackbar.make(view, "Your Description is too short!", BaseTransientBottomBar.LENGTH_LONG)
-                                .setAction("Okay", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                    }
-                                }).show();
-                    } else if (recipients.equals("")) {
-                        Snackbar.make(view, "Please specify your recipients from the drop down", BaseTransientBottomBar.LENGTH_LONG)
-                                .setAction("Okay", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                    }
-                                }).show();
-                    } else {
-                        sharePost();
-                    }
+                    sharePost();
                 }
+                // }
             }
         });
 
@@ -259,6 +261,8 @@ public class new_post_activity extends AppCompatActivity {
     }
 
     private void sharePost() {
+        updateProgressDialog.setCancelable(false);
+        updateProgressDialog.show();
 
         Calendar mycal = Calendar.getInstance();
         SimpleDateFormat Date = new SimpleDateFormat("EEEE, MMMM d, yyyy,");
@@ -269,69 +273,38 @@ public class new_post_activity extends AppCompatActivity {
 
         timeStamp = currentDate + (" ") + currentTime;
 
-        StorageReference imagepath = storageReference.child("Post Images").child("Post on: " + timeStamp);
-        imagepath.putFile(selected_img)
-                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+        author = first_name + (" ") + last_name;
+        author_Email = firebaseAuth.getCurrentUser().getEmail();
+
+        DatabaseReference newpost = databaseReference.push();
+        newpost.keepSynced(true);
+        newpost.child("Title").setValue(post_title);
+        newpost.child("Description").setValue(post_desc);
+        newpost.child("Image").setValue(image);
+        newpost.child("Author").setValue(author);
+        newpost.child("Author_Email").setValue(author_Email);
+        newpost.child("Date_and_Time").setValue(timeStamp);
+        newpost.child("Author_ID").setValue(userID);
+        newpost.child("Recipients").setValue(recipients)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                        double prog = (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                        updateProgressDialog.setMessage("Submitting your post . . . " + (int) prog + "%");
-                        updateProgressDialog.setCancelable(false);
-                        updateProgressDialog.show();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                img_upload_url = uri.toString();
+                    public void onComplete(@NonNull Task<Void> task) {
+                        SharedPreferences sharedPreferences = getSharedPreferences("vib", Context.MODE_PRIVATE);
+                        SharedPreferences sharedPreference2 = getSharedPreferences("Notify", Context.MODE_PRIVATE);
 
-                                String image = img_upload_url;
-                                author = first_name + (" ") + last_name;
-                                author_Email = firebaseAuth.getCurrentUser().getEmail();
+                        if (sharedPreferences.getBoolean("Vibrate", true) && sharedPreference2.getBoolean("Notify", true)) {
+                            Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                            vib.vibrate(200);
+                        }
 
-                                DatabaseReference newpost = databaseReference.push();
-                                newpost.keepSynced(true);
-                                newpost.child("Title").setValue(post_title);
-                                newpost.child("Description").setValue(post_desc);
-                                newpost.child("Image").setValue(image);
-                                newpost.child("Author").setValue(author);
-                                newpost.child("Author_Email").setValue(author_Email);
-                                newpost.child("Date_and_Time").setValue(timeStamp);
-                                newpost.child("Author_ID").setValue(userID);
-                                newpost.child("Recipients").setValue(recipients);
-
-                            }
-                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Uri> task) {
-
-                                SharedPreferences sharedPreferences = getSharedPreferences("vib", Context.MODE_PRIVATE);
-                                SharedPreferences sharedPreference2 = getSharedPreferences("Notify", Context.MODE_PRIVATE);
-
-                                if (sharedPreferences.getBoolean("Vibrate", true) && sharedPreference2.getBoolean("Notify", true)) {
-                                    Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                                    vib.vibrate(200);
-                                }
-
-                                if (task.isSuccessful()) {
-                                    /*PrepareNotification("New post available",
-                                            "' " + post_title + " '" + " by " + author,
-                                            "Notifications",
-                                            "Posts");*/
-
-                                    Toast.makeText(getApplicationContext(), "Post uploaded successfully", Toast.LENGTH_SHORT).show();
-                                    onBackPressed();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Failed to upload" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                    return;
-                                }
-                                updateProgressDialog.dismiss();
-                            }
-
-                        });
-
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Post uploaded successfully", Toast.LENGTH_SHORT).show();
+                            onBackPressed();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Failed to upload" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        updateProgressDialog.dismiss();
                     }
                 });
     }
@@ -350,165 +323,6 @@ public class new_post_activity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void RequestReadStoragePermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(new_post_activity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            new AlertDialog.Builder(new_post_activity.this)
-                    .setCancelable(false)
-                    .setTitle("Permission required")
-                    .setMessage("This app needs access to your gallery")
-                    .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ActivityCompat.requestPermissions(new_post_activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, GALLERY_PERMISSION_CODE);
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    })
-                    .create().show();
-        } else {
-            ActivityCompat.requestPermissions(new_post_activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, GALLERY_PERMISSION_CODE);
-        }
-    }
 
-    private void RequestCameraPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(new_post_activity.this, Manifest.permission.CAMERA)) {
-            new AlertDialog.Builder(new_post_activity.this)
-                    .setCancelable(false)
-                    .setTitle("Permission required")
-                    .setMessage("This app needs access to your phone's camera")
-                    .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ActivityCompat.requestPermissions(new_post_activity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    })
-                    .create().show();
-        } else {
-            ActivityCompat.requestPermissions(new_post_activity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(camera, CAMERA_REQUEST_CODE);
-            } else {
-                Toast.makeText(new_post_activity.this, "Permission to use camera is denied", Toast.LENGTH_LONG).show();
-            }
-        }
-
-        if (requestCode == GALLERY_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent gallery = new Intent();
-                gallery.setAction(Intent.ACTION_GET_CONTENT);
-                gallery.setType("image/*");
-                startActivityForResult(gallery, GALLERY_REQUEST);
-            } else {
-                Toast.makeText(new_post_activity.this, "Permission to access gallery is denied", Toast.LENGTH_LONG).show();
-            }
-        }
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
-
-            Uri image_uri = data.getData();
-            CropImage.activity(image_uri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    // .setAspectRatio(1, 1)
-                    .start(this);
-
-        } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
-
-            Uri image_uri = data.getData();
-            CropImage.activity(image_uri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1, 1)
-                    .start(this);
-
-        }
-
-        CropImage.ActivityResult result = null;
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            result = CropImage.getActivityResult(data);
-
-            if (resultCode == RESULT_OK) {
-
-                selected_img = result.getUri();
-                new_post_image.setImageURI(selected_img);
-            }
-
-        } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-            Exception error = result.getError();
-            Toast.makeText(new_post_activity.this, error.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void PrepareNotification(String Title, String Description, String Topic, String NotificationType) {
-        String NOTIFICATION_TOPIC = "/topics/" + Topic;
-        String NOTIFICATION_TITLE = Title;
-        String NOTIFICATION_MESSAGE = Description;
-        String NOTIFICATION_TYPE = NotificationType;
-
-        JSONObject notificationObject = new JSONObject();
-        JSONObject notificationBody = new JSONObject();
-
-        try {
-            notificationBody.put("sender", userID);
-            notificationBody.put("title", NOTIFICATION_TITLE);
-            notificationBody.put("description", NOTIFICATION_MESSAGE);
-            notificationBody.put("notification_type", NOTIFICATION_TYPE);
-
-            notificationObject.put("to", NOTIFICATION_TOPIC);
-            notificationObject.put("data", notificationBody);
-        } catch (JSONException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        sendNotification(notificationObject);
-    }
-
-    private void sendNotification(JSONObject notificationObject) {
-        JsonObjectRequest request = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationObject,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("FCM_RESPONSE", "OnResponse: " + response.toString());
-                        //Toast.makeText(getApplicationContext(),"Response: " + response.toString(),Toast.LENGTH_LONG).show();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Failed to send:", error.toString());
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json");
-                headers.put("Authorization", "key=AAAAEcvrkCQ:APA91bHIbNSfbqA1Y4wrbUFdxUMtzzPfKuUmZaiXVxgmX3OT1vt_WZggvkubJb9_ItxtsNuzIRck281JC2pb7AXSO8hvJsJ3KSNWUbCyzBMBr4z1_etgSfQ2hJIn-FdEaYcIJT9UVvIr");
-                return headers;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(request);
-        // Volley.newRequestQueue(this).add(request);
-    }
 
 }

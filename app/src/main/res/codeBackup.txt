@@ -1,0 +1,245 @@
+// This file was created to save some unused codes
+
+    /* private void sharePost() {
+
+        Calendar mycal = Calendar.getInstance();
+        SimpleDateFormat Date = new SimpleDateFormat("EEEE, MMMM d, yyyy,");
+        currentDate = Date.format(mycal.getTime());
+
+        SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss a");
+        currentTime = time.format(mycal.getTime());
+
+        timeStamp = currentDate + (" ") + currentTime;
+
+        StorageReference imagepath = storageReference.child("Post Images").child("Post on: " + timeStamp);
+        imagepath.putFile(selected_img)
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                        double prog = (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                        updateProgressDialog.setMessage("Submitting your post . . . " + (int) prog + "%");
+                        updateProgressDialog.setCancelable(false);
+                        updateProgressDialog.show();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                img_upload_url = uri.toString();
+
+                                String image = img_upload_url;
+                                author = first_name + (" ") + last_name;
+                                author_Email = firebaseAuth.getCurrentUser().getEmail();
+
+                                DatabaseReference newpost = databaseReference.push();
+                                newpost.keepSynced(true);
+                                newpost.child("Title").setValue(post_title);
+                                newpost.child("Description").setValue(post_desc);
+                                newpost.child("Image").setValue(image);
+                                newpost.child("Author").setValue(author);
+                                newpost.child("Author_Email").setValue(author_Email);
+                                newpost.child("Date_and_Time").setValue(timeStamp);
+                                newpost.child("Author_ID").setValue(userID);
+                                newpost.child("Recipients").setValue(recipients);
+
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+
+                                SharedPreferences sharedPreferences = getSharedPreferences("vib", Context.MODE_PRIVATE);
+                                SharedPreferences sharedPreference2 = getSharedPreferences("Notify", Context.MODE_PRIVATE);
+
+                                if (sharedPreferences.getBoolean("Vibrate", true) && sharedPreference2.getBoolean("Notify", true)) {
+                                    Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                                    vib.vibrate(200);
+                                }
+
+                                if (task.isSuccessful()) {
+                                    *//*PrepareNotification("New post available",
+                                            "' " + post_title + " '" + " by " + author,
+                                            "Notifications",
+                                            "Posts");*//*
+
+                                    Toast.makeText(getApplicationContext(), "Post uploaded successfully", Toast.LENGTH_SHORT).show();
+                                    onBackPressed();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Failed to upload" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+                                updateProgressDialog.dismiss();
+                            }
+
+                        });
+
+                    }
+                });
+    }*/
+
+
+   /* private void RequestReadStoragePermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(new_post_activity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            new AlertDialog.Builder(new_post_activity.this)
+                    .setCancelable(false)
+                    .setTitle("Permission required")
+                    .setMessage("This app needs access to your gallery")
+                    .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ActivityCompat.requestPermissions(new_post_activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, GALLERY_PERMISSION_CODE);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create().show();
+        } else {
+            ActivityCompat.requestPermissions(new_post_activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, GALLERY_PERMISSION_CODE);
+        }
+    }*/
+
+   /* private void RequestCameraPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(new_post_activity.this, Manifest.permission.CAMERA)) {
+            new AlertDialog.Builder(new_post_activity.this)
+                    .setCancelable(false)
+                    .setTitle("Permission required")
+                    .setMessage("This app needs access to your phone's camera")
+                    .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ActivityCompat.requestPermissions(new_post_activity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create().show();
+        } else {
+            ActivityCompat.requestPermissions(new_post_activity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+        }
+    }*/
+
+  /*  @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(camera, CAMERA_REQUEST_CODE);
+            } else {
+                Toast.makeText(new_post_activity.this, "Permission to use camera is denied", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        if (requestCode == GALLERY_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent gallery = new Intent();
+                gallery.setAction(Intent.ACTION_GET_CONTENT);
+                gallery.setType("image/*");
+                startActivityForResult(gallery, GALLERY_REQUEST);
+            } else {
+                Toast.makeText(new_post_activity.this, "Permission to access gallery is denied", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+*/
+   /* @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
+
+            Uri image_uri = data.getData();
+            CropImage.activity(image_uri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    // .setAspectRatio(1, 1)
+                    .start(this);
+
+        } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+
+            Uri image_uri = data.getData();
+            CropImage.activity(image_uri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1, 1)
+                    .start(this);
+
+        }
+
+        CropImage.ActivityResult result = null;
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            result = CropImage.getActivityResult(data);
+
+            if (resultCode == RESULT_OK) {
+
+                selected_img = result.getUri();
+                new_post_image.setImageURI(selected_img);
+            }
+
+        } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            Exception error = result.getError();
+            Toast.makeText(new_post_activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+*/
+/*
+    private void PrepareNotification(String Title, String Description, String Topic, String NotificationType) {
+        String NOTIFICATION_TOPIC = "/topics/" + Topic;
+        String NOTIFICATION_TITLE = Title;
+        String NOTIFICATION_MESSAGE = Description;
+        String NOTIFICATION_TYPE = NotificationType;
+
+        JSONObject notificationObject = new JSONObject();
+        JSONObject notificationBody = new JSONObject();
+
+        try {
+            notificationBody.put("sender", userID);
+            notificationBody.put("title", NOTIFICATION_TITLE);
+            notificationBody.put("description", NOTIFICATION_MESSAGE);
+            notificationBody.put("notification_type", NOTIFICATION_TYPE);
+
+            notificationObject.put("to", NOTIFICATION_TOPIC);
+            notificationObject.put("data", notificationBody);
+        } catch (JSONException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        sendNotification(notificationObject);
+    }
+*/
+
+/*
+    private void sendNotification(JSONObject notificationObject) {
+        JsonObjectRequest request = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("FCM_RESPONSE", "OnResponse: " + response.toString());
+                        //Toast.makeText(getApplicationContext(),"Response: " + response.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed to send:", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "key=AAAAEcvrkCQ:APA91bHIbNSfbqA1Y4wrbUFdxUMtzzPfKuUmZaiXVxgmX3OT1vt_WZggvkubJb9_ItxtsNuzIRck281JC2pb7AXSO8hvJsJ3KSNWUbCyzBMBr4z1_etgSfQ2hJIn-FdEaYcIJT9UVvIr");
+                return headers;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(request);
+        // Volley.newRequestQueue(this).add(request);
+    }
+*/
